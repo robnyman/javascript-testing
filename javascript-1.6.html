@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Testing JavaScript 1.6</title>
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="screen">
+</head>
+
+<body>
+	
+	<div id="container">
+		<h1>
+			Testing JavaScript 1.6
+			<a href="index.html"> - To index of all tests and compatibility tables</a>
+		</h1>
+		<p>Below I have tested the new features in JavaScript 1.6. The code below is also run immediately as you load the page, so you will see the actual results as well. Below each test is the web browsers it works in, and the minimum version of it required.</p>
+		<p>
+			<a href="https://developer.mozilla.org/en/New_in_JavaScript_1.6">More information about JavaScript 1.6</a>
+		</p>
+		
+		<div class="navigation">
+			<h2>Content</h2>
+			<ul>
+				<li>
+					<a href="#array-extras">Array extras</a>
+					<ul>
+						<li><a href="#index-of">indexOf</a></li>
+						<li><a href="#last-index-of">lastIndexOf</a></li>
+						<li><a href="#every">every</a></li>
+						<li><a href="#filter">filter</a></li>
+						<li><a href="#for-each">forEach</a></li>
+						<li><a href="#map">map</a></li>
+						<li><a href="#some">some</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#array-string-generics">Array and String generics</a>
+					<ul>
+						<li><a href="#array-generics">Array generics</a></li>
+						<li><a href="#string-generics">String generics</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="array-extras">Array extras</h2>
+		<div class="section">
+			<h3 id="index-of">The indexOf method</h3>
+<pre class="brush: js">var arr = ["Microsoft", "Mozilla", "Apple"];
+arr.indexOf("Mozilla");</pre>
+			<p>
+				<strong>Result:</strong> 
+				<span id="results-index-of"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = ["Microsoft", "Mozilla", "Apple"];
+					document.getElementById("results-index-of").innerHTML = arr.indexOf("Mozilla");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="last-index-of">The lastIndexOf method</h3>
+<pre class="brush: js">var arr = ["Firefox", "IE", "Chrome", "Firefox"];
+arr.lastIndexOf("Firefox");</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-last-index-of"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = ["Firefox", "IE", "Chrome", "Firefox"];
+					document.getElementById("results-last-index-of").innerHTML = arr.lastIndexOf("Firefox");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="every">The every method</h3>
+<pre class="brush: js">var arr = [4, 7, 10];
+arr.every(function (value) {
+	return value &gt; 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-every"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = [4, 7, 10];
+					document.getElementById("results-every").innerHTML = arr.every(function (value) {
+						return value > 5;
+					});
+				})();
+			</script>
+			
+<pre class="brush: js">var arr = [6, 7, 10];
+arr.every(function (value) {
+	return value &gt; 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-every-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var arr = [6, 7, 10];
+					document.getElementById("results-every-2").innerHTML = arr.every(function (value) {
+						return value > 5;
+					});
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="filter">The filter method</h3>
+<pre class="brush: js">var arr = [4, 7, 10];
+arr.filter(function (value) {
+	return value > 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-filter"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = [4, 7, 10];
+					document.getElementById("results-filter").innerHTML = arr.filter(function (value) {
+						return value > 5;
+					});
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="for-each">The forEach method</h3>
+<pre class="brush: js">var arr = ["Firefox", "IE", "Chrome", "Opera", "Safari"]
+	resultValues = [];
+arr.forEach(function (value) {
+	resultValues.push(value.toUpperCase());
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-for-each"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = ["Firefox", "IE", "Chrome", "Opera", "Safari"],
+						resultValues = [];
+					arr.forEach(function (value) {
+						resultValues.push(value.toUpperCase());
+					});	
+					document.getElementById("results-for-each").innerHTML = resultValues.join(" - ");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="map">The map method</h3>
+<pre class="brush: js">var arr = [4, 7, 10];
+arr.map(function (value) {
+	return value + 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-map"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = [4, 7, 10];
+					document.getElementById("results-map").innerHTML = arr.map(function (value) {
+						return value + 5;
+					});
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="some">The some method</h3>
+<pre class="brush: js">var arr = [4, 7, 10];
+arr.some(function (value) {
+	return value &gt; 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-some"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var arr = [4, 7, 10];
+					document.getElementById("results-some").innerHTML = arr.some(function (value) {
+						return value > 5;
+					});
+				})();
+			</script>
+			
+<pre class="brush: js">var arr = [1, 2, 4];
+arr.some(function (value) {
+	return value &gt; 5;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-some-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var arr = [1, 2, 4];
+					document.getElementById("results-some-2").innerHTML = arr.some(function (value) {
+						return value > 5;
+					});
+				})();
+			</script>			
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 3.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Google Chrome" src="images/google-chrome.png"> 1.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="array-string-generics">Array and String generics</h2>
+		<div class="section">
+			<h3 id="array-generics">Array generics</h3>
+<pre class="brush: js">var words = "These are just words";
+Array.filter(words, function (value) {
+	return value.indexOf("s") === -1;
+});</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-array-generics"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var words = "These are just words";
+					document.getElementById("results-array-generics").innerHTML = Array.filter(words, function (value) {
+						return value.indexOf("s") === -1;
+					});
+				})();
+			</script>
+			
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+			
+		</div>
+		
+		<div class="section">
+			<h3 id="string-generics">String generics</h3>	
+			
+<pre class="brush: js">var arr = ["Firefox", "Safari", "Opera"];
+String.replace(arr, /[aoueiy]/, "");</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-string-generics"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var arr = ["Firefox", "Safari", "Opera"];
+					document.getElementById("results-string-generics").innerHTML = String.replace(arr, /[aoueiy]/, "");
+				})();
+			</script>
+
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="string-generics-global">String generics, global flag</h3>	
+			
+<pre class="brush: js">// Notice global flag for string match
+var arr = ["Firefox", "Safari", "Opera"];
+String.replace(arr, /[aoueiy]/g, "");</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-string-generics-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var arr = ["Firefox", "Safari", "Opera"];
+					document.getElementById("results-string-generics-2").innerHTML = String.replace(arr, /[aoueiy]/g, "");
+				})();
+			</script>
+
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="syntax-highlighter/scripts/shJavaScript.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+	
+	<script type="text/javascript"> 
+	  var gaJsHost = (("https:" == document.location.protocol) ? 
+	  "https://ssl." : "http://www."); 
+	  document.write(unescape("%3Cscript src='" + gaJsHost + 
+	  "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); 
+	</script> 
+	<script type="text/javascript"> 
+	   var pageTracker = _gat._getTracker("UA-56164-1"); 
+	   pageTracker._initData(); 
+	   pageTracker._trackPageview(); 
+	</script>
+	
+	<script type="text/javascript">
+	<!-- 
+	var sc_project=593937; 
+	var sc_partition=4; 
+	var sc_security="175a1fec"; 
+	//-->
+	</script>
+
+	<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c5.statcounter.com/counter.php?sc_project=593937&amp;java=0&amp;security=175a1fec" alt="free geoip" /></a></div></noscript>
+	
+</body>
+</html>

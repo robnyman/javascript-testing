@@ -1,0 +1,561 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Testing JavaScript 1.7</title>
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="screen">
+</head>
+
+<body>
+	
+	<div id="container">
+		<h1>
+			Testing JavaScript 1.7
+			<a href="index.html"> - To index of all tests and compatibility tables</a>
+		</h1>
+		<p>Below I have tested the new features in JavaScript 1.7. The code below is also run immediately as you load the page, so you will see the actual results as well. Below each test is the web browsers it works in, and the minimum version of it required.</p>
+		<p>
+			<a href="https://developer.mozilla.org/en/New_in_JavaScript_1.7">More information about JavaScript 1.7</a>
+		</p>
+		
+		<div class="navigation">
+			<h2>Content</h2>
+			<ul>
+				<li>
+					<a href="#generators-and-iterators">Generators and Iterators</a>
+					<ul>
+						<li><a href="#generators">Generators</a></li>
+						<li><a href="#iterators">Iterators</a></li>
+					</ul>
+				</li>
+				<li><a href="#array-comprehensions">Array comprehensions</a></li>
+				<li>
+					<a href="#let">Using let for block scope</a>
+					<ul>
+						<li><a href="#let-statement">let statement</a></li>
+						<li><a href="#let-expression">let expression</a></li>
+						<li><a href="#let-definition">let definition</a></li>
+					</ul>
+				</li>
+				<li><a href="#destructuring-assignment">Destructuring assignment</a></li>
+				<li><a href="#destructuring-assignment-with-let-statement">Destructuring assignment with let statement</a></li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="generators-and-iterators">Generators and Iterators</h2>
+		<div class="section">
+			<h3 id="generators">Generators</h3>
+<pre class="brush: js">function double5() {
+	var i=0, j=5, k;
+	while (true) {
+		yield i;
+		k = i;
+		i = j;
+		j += i;
+	}
+}
+
+var g = double5(),
+	resultValues = [];
+for (var i=0; i&lt;5; i++) {
+	resultValues.push(g.next());
+}</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-generators"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="application/javascript;version=1.7">
+				(function () {
+					function double5() {
+						var i=0, j=5, k;
+						while (true) {
+							yield i;
+							k = i;
+							i = j;
+							j += i;
+						}
+					}
+
+					var g = double5(),
+						resultValues = [];
+					for (var i=0; i<5; i++) {
+						resultValues.push(g.next());
+					}
+					document.getElementById("results-generators").innerHTML = resultValues.join(", ");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="iterators">Iterators</h3>
+<pre class="brush: js">var lostInfo = {
+	name : "Lost",
+	location : "Island",
+	numbers : "4 8 15 16 23 42"
+};
+
+var iteratorObj = Iterator(lostInfo),
+	resultValues = [],
+	next;
+try{
+	while (true) {
+		next = iteratorObj.next();
+		resultValues.push(next[0] + ": " + next[1]);
+	}
+}
+catch (err if err instanceof StopIteration) {  
+	resultValues.push("END OF LIST");
+}
+catch (err) {  
+	resultValues.push("UNKNOWN ERROR");
+}</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-iterators"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var lostInfo = {
+						name : "Lost",
+						location : "Island",
+						numbers : "4 8 15 16 23 42"
+					};
+					
+					var iteratorObj = Iterator(lostInfo),
+						resultValues = [],
+						next;
+					try{
+						while (true) {
+							next = iteratorObj.next();
+							resultValues.push(next[0] + ": " + next[1]);
+						}
+					}
+					catch (err if err instanceof StopIteration) {  
+						resultValues.push("END OF LIST");
+					}
+					catch (err) {  
+						resultValues.push("UNKNOWN ERROR");
+					}
+					document.getElementById("results-iterators").innerHTML = resultValues.join(" - ");
+				})();
+			</script>
+			
+<pre class="brush: js">var lostInfo = {
+	name : "Lost",
+	location : "Island",
+	numbers : "4 8 15 16 23 42"
+};
+
+// Notice true below - will return only parameter names and not values, as opposed to the example above
+var iteratorObj = Iterator(lostInfo, true),
+	resultValues = [];
+try{
+	while (true) {
+		resultValues.push(iteratorObj.next());
+	}
+}
+catch (err if err instanceof StopIteration) {  
+	resultValues.push("END OF LIST");
+}
+catch (err) {  
+	resultValues.push("UNKNOWN ERROR");
+}</pre>
+
+
+			<p>
+				<strong>Result:</strong>
+				<span id="results-iterators-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var lostInfo = {
+						name : "Lost",
+						location : "Island",
+						numbers : "4 8 15 16 23 42"
+					};
+					
+					// Notice true below - will return only parameter names and not values, as opposed to the example above
+					var iteratorObj = Iterator(lostInfo, true),
+						resultValues = [];
+					try{
+						while (true) {
+							resultValues.push(iteratorObj.next());
+						}
+					}
+					catch (err if err instanceof StopIteration) {  
+						resultValues.push("END OF LIST");
+					}
+					catch (err) {  
+						resultValues.push("UNKNOWN ERROR");
+					}
+					document.getElementById("results-iterators-2").innerHTML = resultValues.join(" - ");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		<h2 id="array-comprehensions">Array comprehensions</h2>
+		<div class="section">
+<pre class="brush: js">function setVal (start, end) {
+	for (let i=start; i&lt;end; ++i) {
+		yield i;
+	}
+}
+var evenValues = [i for each (i in setVal(0, 15)) if (i % 2 == 0)];</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-array-comprehensions"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript;version=1.7">
+				(function () {
+					function setVal (start, end) {
+						for (let i=start; i<end; ++i) {
+							yield i;
+						}
+					}
+					var evenValues = [i for each (i in setVal(0, 15)) if (i % 2 == 0)];
+					document.getElementById("results-array-comprehensions").innerHTML = evenValues.join(", ");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="let">Using let for block scope</h2>
+		<div class="section">
+			<h3 id="let-statement">let statement</h3>
+<pre class="brush: js">var x = 5,
+	y = 7,
+	resultValues = ["Before let statement: " + x + ", " + y];
+	
+let (x=15, y=12) {
+	resultValues.push("In let statement: " + x + ", " + y);
+}
+
+resultValues.push("After let statement: " + x + ", " + y);</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-let-statement"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var x = 5,
+						y = 7,
+						resultValues = ["Before let statement: " + x + ", " + y];
+						
+					let (x=15, y=12) {
+						resultValues.push("In let statement: " + x + ", " + y);
+					}
+					
+					resultValues.push("After let statement: " + x + ", " + y);
+					document.getElementById("results-let-statement").innerHTML = resultValues.join("<br>");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="let-expression">let expression</h3>
+<pre class="brush: js">var x = 1,
+	y = 3,
+	resultValues = ["Before let expression: " + x + ", " + y];
+	
+let (x=7, y=8) resultValues.push("In let expression: " + x + ", " + y);
+
+resultValues.push("After let expression: " + x + ", " + y);</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-let-expression"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var x = 1,
+						y = 3,
+						resultValues = ["Before let expression: " + x + ", " + y];
+						
+					let (x=7, y=8) resultValues.push("In let expression: " + x + ", " + y);
+					
+					resultValues.push("After let expression: " + x + ", " + y);
+					document.getElementById("results-let-expression").innerHTML = resultValues.join("<br>");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="let-definition">let definition</h3>
+<pre class="brush: js">var letDefinitionResults = 
+		document.getElementById("results-let-definition"),
+	item;
+for (var i=0; i&lt;5; i++) {
+	item = document.createElement("div");
+	item.innerHTML = "Click me - I will say " + i;
+	let j = i;
+	item.onclick = function () {
+		alert("I am " + j);
+	};
+	letDefinitionResults.appendChild(item);
+}</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-let-definition"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var letDefinitionResults = document.getElementById("results-let-definition"),
+						item;
+					let(x=10) letDefinitionResults.innerHTML = "";				
+					for (var i=0; i<5; i++) {
+						item = document.createElement("div");
+						item.innerHTML = "Click me - I will say " + i;
+						let j = i;
+						item.onclick = function () {
+							alert("I am " + j);
+						};
+						letDefinitionResults.appendChild(item);
+					}
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="destructuring-assignment">Destructuring assignment</h2>
+		<div class="section">
+<pre class="brush: js">var a = 1,
+	b = 2;
+// Value swapping	
+[a, b] = [b, a];</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-destructuring-assignment"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var a = 1,
+						b = 2;
+					// Value swapping	
+					[a, b] = [b, a];
+					document.getElementById("results-destructuring-assignment").innerHTML = "a = " + a + ", b = " + b;
+				})();
+			</script>
+			
+<pre class="brush: js">var a = 1,
+	b = 2,
+	c = 3,
+	d = 4;
+// Value swapping	
+[a, b, c, d] = [d, c, b, a];</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-destructuring-assignment-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var a = 1,
+						b = 2,
+						c = 3,
+						d = 4;
+					// Value swapping	
+					[a, b, c, d] = [d, c, b, a];
+					document.getElementById("results-destructuring-assignment-2").innerHTML = "a = " + a + ", b = " + b + ", c = " + c + ", d = " + d;
+				})();
+			</script>
+						
+<pre class="brush: js">var a = 1,
+	b = 2;
+
+function newValues () {
+	return [10, 20];
+}					
+	
+// Assigning new values
+[a, b] = newValues();</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-destructuring-assignment-3"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var a = 1,
+						b = 2;
+					
+					function newValues () {
+						return [10, 20];
+					}					
+						
+					// Assigning new values
+					[a, b] = newValues();
+					document.getElementById("results-destructuring-assignment-3").innerHTML = "a = " + a + ", b = " + b;
+				})();
+			</script>
+									
+<pre class="brush: js">var a = 1,
+	b = 2;
+
+function newValues () {
+	return [10, 20, 30];
+}					
+
+// Assigning new values, ignoring the second one
+[a, , b] = newValues();</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-destructuring-assignment-4"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var a = 1,
+						b = 2;
+
+					function newValues () {
+						return [10, 20, 30];
+					}					
+
+					// Assigning new values, ignoring the second one
+					[a, , b] = newValues();
+					document.getElementById("results-destructuring-assignment-4").innerHTML = "a = " + a + ", b = " + b;
+				})();
+			</script>
+			
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+
+				<li class="browser">
+					<img alt="Opera" src="images/opera.png"> 9.5+
+				</li>
+			</ul>
+		</div>
+			
+			
+		<h2 id="destructuring-assignment-with-let-statement">Destructuring assignment with let statement</h2>
+		<div class="section">	
+<pre class="brush: js">var griffins = {
+	father : "Peter",
+	mother : "Lois",
+	son : "Chris",
+	daugher : "Meg",
+	baby : "Stewie",
+	dog : "Brian"
+},
+	resultValues = [];
+
+for (let [type, name] in Iterator(griffins)) {
+	resultValues.push(type + ": " + name);
+}</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="results-destructuring-assignment-5"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript;version=1.7">
+				(function () {
+					var griffins = {
+						father : "Peter",
+						mother : "Lois",
+						son : "Chris",
+						daugher : "Meg",
+						baby : "Stewie",
+						dog : "Brian"
+					},
+						resultValues = [];
+					
+					for (let [type, name] in Iterator(griffins)) {
+						resultValues.push(type + ": " + name);
+					}
+					document.getElementById("results-destructuring-assignment-5").innerHTML = resultValues.join("<br>");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="syntax-highlighter/scripts/shJavaScript.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+	
+	<script type="text/javascript"> 
+	  var gaJsHost = (("https:" == document.location.protocol) ? 
+	  "https://ssl." : "http://www."); 
+	  document.write(unescape("%3Cscript src='" + gaJsHost + 
+	  "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); 
+	</script> 
+	<script type="text/javascript"> 
+	   var pageTracker = _gat._getTracker("UA-56164-1"); 
+	   pageTracker._initData(); 
+	   pageTracker._trackPageview(); 
+	</script>
+	
+	<script type="text/javascript">
+	<!-- 
+	var sc_project=593937; 
+	var sc_partition=4; 
+	var sc_security="175a1fec"; 
+	//-->
+	</script>
+
+	<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c5.statcounter.com/counter.php?sc_project=593937&amp;java=0&amp;security=175a1fec" alt="free geoip" /></a></div></noscript>
+	
+	
+</body>
+</html>

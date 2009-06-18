@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Testing JavaScript 1.8</title>
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="screen">
+</head>
+
+<body>
+	
+	<div id="container">
+		<h1>
+			Testing JavaScript 1.8
+			<a href="index.html"> - To index of all tests and compatibility tables</a>
+		</h1>
+		<p>Below I have tested the new features in JavaScript 1.8. The code below is also run immediately as you load the page, so you will see the actual results as well. Below each test is the web browsers it works in, and the minimum version of it required.</p>
+		<p>
+			<a href="https://developer.mozilla.org/en/New_in_JavaScript_1.8">More information about JavaScript 1.8</a>
+		</p>
+		
+		<div class="navigation">
+			<h2>Content</h2>
+			<ul>
+				<li><a href="#expression-closures">Expression closures</a></li>
+				<li><a href="#generator-expressions">Generator expressions</a></li>
+				<li>
+					<a href="#array-extras">Array extras</a>
+					<ul>
+						<li><a href="#reduce">reduce</a></li>
+						<li><a href="#reduce-right">reduceRight</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="expression-closures">Expression closures</h2>
+		<div class="section">
+<pre class="brush: js">// Notice the omission of braces and return statement
+function expressionClosure () "Yeah, ok"</pre>
+			<p>
+				<strong>Result:</strong> 
+				<span id="results-expression-closures"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					// Notice the omission of braces and return statement
+					function expressionClosure () "Yeah, ok"
+					document.getElementById("results-expression-closures").innerHTML = expressionClosure();
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 3.0+
+				</li>
+			</ul>
+		</div>
+		
+		<h2 id="generator-expressions">Generator expressions</h2>
+		<div class="section">
+<pre class="brush: js">var animals = {
+	dog : "Nice",
+	cat : "Independent",
+	horse : "big"
+},
+	resultValues = [],
+	iterating = (i + 3 for (i in animals));
+try {
+	while (true) {
+		resultValues.push(iterating.next());
+	}
+}
+catch (err if err instanceof StopIteration) {
+	resultValues.push("END OF LIST");
+}</pre>
+			<p>
+				<strong>Result:</strong> 
+				<span id="results-generator-expressions"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var animals = {
+						dog : "Nice",
+						cat : "Independent",
+						horse : "big"
+					},
+						resultValues = [],
+						iterating = (i + 3 for (i in animals));
+					try {
+						while (true) {
+							resultValues.push(iterating.next());
+						}
+					}
+					catch (err if err instanceof StopIteration) {
+						resultValues.push("END OF LIST");
+					}
+					document.getElementById("results-generator-expressions").innerHTML = resultValues.join(", ");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 3.0+
+				</li>
+			</ul>
+		</div>
+		
+		<h2 id="array-extras">Array extras</h2>
+		<div class="section">
+			<h3 id="reduce">reduce</h3>
+<pre class="brush: js">var numbers = [1, 2, 3, 4, 5],
+	returnValues = [];
+
+numbers.reduce(function (prev, current, index, array) {
+	returnValues.push("Previous: " + prev + ", current: " + current + ", index: " + index);
+	return current;
+});</pre>
+			<p>
+				<strong>Result:</strong> 
+				<span id="results-array-extras"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					var numbers = [1, 2, 3, 4, 5],
+						returnValues = [];
+					
+					numbers.reduce(function (prev, current, index, array) {
+						returnValues.push("Previous: " + prev + ", current: " + current + ", index: " + index);
+						return current;
+					});
+					
+					document.getElementById("results-array-extras").innerHTML = returnValues.join("<br>");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 3.0+
+				</li>
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 4.0+
+				</li>
+			</ul>
+		</div>
+		
+		<div class="section">
+			<h3 id="reduce-right">reduceRight</h3>
+<pre class="brush: js">var numbers = [1, 2, 3, 4, 5],
+	returnValues = [];
+
+numbers.reduce(function (prev, current, index, array) {
+	returnValues.push("Previous: " + prev + ", current: " + current + ", index: " + index);
+	return current;
+});</pre>
+			<p>
+				<strong>Result:</strong> 
+				<span id="results-array-extras-2"><span class="failed">FAILED</span></span>
+			</p>
+
+			<script type="text/javascript">
+				(function () {
+					var numbers = [1, 2, 3, 4, 5],
+						returnValues = [];
+
+					numbers.reduceRight(function (prev, current, index, array) {
+						returnValues.push("Previous: " + prev + ", current: " + current + ", index: " + index);
+						return current;
+					});
+
+					document.getElementById("results-array-extras-2").innerHTML = returnValues.join("<br>");
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 3.0+
+				</li>
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 4.0+
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="syntax-highlighter/scripts/shJavaScript.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+	
+	<script type="text/javascript"> 
+	  var gaJsHost = (("https:" == document.location.protocol) ? 
+	  "https://ssl." : "http://www."); 
+	  document.write(unescape("%3Cscript src='" + gaJsHost + 
+	  "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); 
+	</script> 
+	<script type="text/javascript"> 
+	   var pageTracker = _gat._getTracker("UA-56164-1"); 
+	   pageTracker._initData(); 
+	   pageTracker._trackPageview(); 
+	</script>
+	
+	<script type="text/javascript">
+	<!-- 
+	var sc_project=593937; 
+	var sc_partition=4; 
+	var sc_security="175a1fec"; 
+	//-->
+	</script>
+
+	<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c5.statcounter.com/counter.php?sc_project=593937&amp;java=0&amp;security=175a1fec" alt="free geoip" /></a></div></noscript>
+	
+</body>
+</html>

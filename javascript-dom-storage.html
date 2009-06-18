@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>DOM Storage / Web Storage</title>
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="screen">	
+</head>
+
+<body>
+	
+	<div id="container">
+		<h1>
+			DOM Storage
+			<a href="index.html"> - To index of all tests and compatibility tables</a>
+		</h1>
+		<p>Below are tests for sessionStorage and localStorage in various web browsers. Please note that sessionStorage is only for the current window and session, whereas localStorage is saved between sessions.</p>
+		
+		<div class="navigation">
+			<h2>Content</h2>
+			<ul>
+				<li>
+					<a href="#session-storage">sessionStorage</a>
+				</li>
+				<li>
+					<a href="#local-storage">localStorage</a>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<h2 id="session-storage">sessionStorage</h2>
+		<div class="section">
+<pre class="brush: js">sessionStorage["name"] = "Robert";
+var theName = sessionStorage["name"];</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="session-storage-results"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					sessionStorage["name"] = "Robert";
+					var theName = sessionStorage["name"];
+					document.getElementById("session-storage-results").innerHTML = 'theName = ' + sessionStorage["name"];
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Internet Explorer" src="images/ie.png"> 8.0+
+				</li>
+				
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 2.0+
+				</li>
+				
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 4.0+
+				</li>
+			</ul>
+		</div>
+		
+		<h2 id="local-storage">localStorage</h2>
+		<div class="section">
+<pre class="brush: js">localStorage["occupation"] = "Web Developer";
+var occupation = localStorage["occupation"];</pre>
+			<p>
+				<strong>Result:</strong>
+				<span id="local-storage-results"><span class="failed">FAILED</span></span>
+			</p>
+		
+			<script type="text/javascript">
+				(function () {
+					localStorage["occupation"] = "Web Developer";
+					var occupation = localStorage["occupation"];
+					document.getElementById("local-storage-results").innerHTML = "occupation = " + occupation;
+				})();
+			</script>
+		
+			<h4>Works in:</h4>
+			<ul class="browsers">
+				<li class="browser">
+					<img alt="Internet Explorer" src="images/ie.png"> 8.0+
+				</li>
+				
+				<li class="browser">
+					<img alt="Firefox" src="images/firefox.png"> 3.5+
+				</li>
+				
+				<li class="browser">
+					<img alt="Safari" src="images/safari.png"> 4.0+
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="syntax-highlighter/scripts/shJavaScript.js"></script>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+	
+	<script type="text/javascript"> 
+	  var gaJsHost = (("https:" == document.location.protocol) ? 
+	  "https://ssl." : "http://www."); 
+	  document.write(unescape("%3Cscript src='" + gaJsHost + 
+	  "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); 
+	</script> 
+	<script type="text/javascript"> 
+	   var pageTracker = _gat._getTracker("UA-56164-1"); 
+	   pageTracker._initData(); 
+	   pageTracker._trackPageview(); 
+	</script>
+	
+	<script type="text/javascript">
+	<!-- 
+	var sc_project=593937; 
+	var sc_partition=4; 
+	var sc_security="175a1fec"; 
+	//-->
+	</script>
+
+	<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c5.statcounter.com/counter.php?sc_project=593937&amp;java=0&amp;security=175a1fec" alt="free geoip" /></a></div></noscript>
+	
+	
+</body>
+</html>
