@@ -48,7 +48,7 @@
 		<div class="section">
 			<h3 id="native-json-parse">JSON.parse</h3>
 <pre class="brush: js">var JSONString = '{"name" : "Robert", "lastName" : "Nyman"}',
-JSONObject = JSON.parse(JSONString);</pre>
+	JSONObject = JSON.parse(JSONString);</pre>
 			<p>
 				<strong>Result:</strong> 
 				<span id="native-json-parse-results"><span class="failed">FAILED</span></span>
@@ -75,8 +75,11 @@ JSONObject = JSON.parse(JSONString);</pre>
 		
 		<div class="section">
 			<h3 id="native-json-stringify">JSON.stringify</h3>
-<pre class="brush: js">var JSONString = '{"name" : "Robert", "lastName" : "Nyman"}',
-JSONObject = JSON.parse(JSONString);</pre>
+<pre class="brush: js">var obj = {
+		name : "Robert",
+		lastName : "Nyman"
+	},
+	JSONString = JSON.stringify(obj);</pre>
 			<p>
 				<strong>Result:</strong> 
 				<span id="native-json-stringify-results"><span class="failed">FAILED</span></span>
