@@ -155,7 +155,7 @@ numbers.reduce(function (prev, current, index, array) {
 <pre class="brush: js">var numbers = [1, 2, 3, 4, 5],
 	returnValues = [];
 
-numbers.reduce(function (prev, current, index, array) {
+numbers.reduceRight(function (prev, current, index, array) {
 	returnValues.push("Previous: " + prev + ", current: " + current + ", index: " + index);
 	return current;
 });</pre>
